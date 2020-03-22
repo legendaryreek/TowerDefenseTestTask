@@ -16,6 +16,7 @@ namespace DP.TowerDefense
         public EnemyController EnemyController { get; private set; }
         public LevelController LevelController { get; private set; }
         public WaveController WaveController { get; private set; }
+        public PlayerController PlayerController { get; private set; }
 
 
         public void Init()
@@ -25,6 +26,7 @@ namespace DP.TowerDefense
             LevelController = new LevelController();
             EnemyController = new EnemyController();
             WaveController = new WaveController();
+            PlayerController = new PlayerController();
         }
 
         public void Dispose()
@@ -56,6 +58,7 @@ namespace DP.TowerDefense
 
             LevelController.StartLevel();
             WaveController.InitWaves();
+            PlayerController.StartLevel();
         }
 
         public void StopGame()

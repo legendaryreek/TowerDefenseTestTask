@@ -15,6 +15,8 @@ namespace DP.TowerDefense
     public class LevelSettings
     {
         public GameObject prefab;
+        public int playerCoinsAmount;
+        public int playerHealthAmount;
         public WaveSettings[] waves;
     }
 

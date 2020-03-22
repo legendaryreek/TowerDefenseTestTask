@@ -8,13 +8,16 @@ namespace DP.TowerDefense
     public class Enemy
     {
         public event Action<Enemy> OnEnemyReachedEndOfWayEvent;
+        public event Action<Enemy> OnEnemyDiedEvent;
+
+        public int DamageAmount { get; private set; } = 5;
+        public int CoinsAmount { get; private set; } = 5;
 
         private GameObject _selfObject;
         private Transform _selfTransform;
 
         private float _speed = 1f;
-        private int _health,
-                    _damage;
+        private int _health;
 
         private Transform _targetWavepoint;
         private int _wavepointIndex;

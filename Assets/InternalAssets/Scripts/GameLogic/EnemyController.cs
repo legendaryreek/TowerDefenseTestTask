@@ -60,11 +60,24 @@ namespace DP.TowerDefense
             }
 
             enemy.OnEnemyReachedEndOfWayEvent += OnEnemyReachedEndOfWayEventHandler;
+            enemy.OnEnemyDiedEvent += OnEnemyDiedEventHandler;
             _enemies.Add(enemy);
         }
 
         private void OnEnemyReachedEndOfWayEventHandler(Enemy enemy)
         {
+            _gameManager.PlayerController.Damage(enemy.DamageAmount);
+            KillEnemy(enemy);
+        }
+
+        private void OnEnemyDiedEventHandler(Enemy enemy)
+        {
+            KillEnemy(enemy);
+        }
+
+        private void KillEnemy(Enemy enemy)
+        {
+            _gameManager.PlayerController.ChangeCoinsAmount(enemy.CoinsAmount);
             enemy.Dispose();
             _enemies.Remove(enemy);
         }
