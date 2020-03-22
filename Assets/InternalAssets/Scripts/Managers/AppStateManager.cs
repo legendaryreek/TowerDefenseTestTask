@@ -35,10 +35,12 @@ namespace DP.TowerDefense
             switch (stateTo)
             {
                 case Enumerators.AppState.AppStart:
+                    ChangeAppState(Enumerators.AppState.Gameplay);
                     break;
                 case Enumerators.AppState.Main:
                     break;
                 case Enumerators.AppState.Gameplay:
+                    GameClient.Get<IGameManager>().StartGame();
                     break;
             }
         }

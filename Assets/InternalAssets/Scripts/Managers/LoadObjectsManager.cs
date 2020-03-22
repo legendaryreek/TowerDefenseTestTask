@@ -25,6 +25,11 @@ namespace DP.TowerDefense
             return LoadFromResources<T>(path);
         }
 
+        public T[] GetAllObjectsByPath<T>(string path) where T : Object
+        {
+            return LoadAllFromResources<T>(path);
+        }
+
         public string GetTextByPath(string path)
         {
             return File.ReadAllText(path);
@@ -38,6 +43,11 @@ namespace DP.TowerDefense
         private T LoadFromResources<T>(string path) where T : Object
         {
             return Resources.Load<T>(path);
+        }
+
+        private T[] LoadAllFromResources<T>(string path) where T : Object
+        {
+            return Resources.LoadAll<T>(path);
         }
     }
 }

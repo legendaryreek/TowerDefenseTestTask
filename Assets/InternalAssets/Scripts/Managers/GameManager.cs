@@ -12,9 +12,11 @@ namespace DP.TowerDefense
 
         public bool IsGameRunning { get; set; }
 
+        private LevelController _levelController;
+
         public void Init()
         {
-
+            _levelController = new LevelController();
         }
 
         public void Dispose()
@@ -42,6 +44,8 @@ namespace DP.TowerDefense
             IsGameRunning = true;
 
             OnStartGame?.Invoke();
+
+            _levelController.StartLevel();
         }
 
         public void StopGame()
