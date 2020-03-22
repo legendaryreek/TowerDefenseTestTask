@@ -28,6 +28,11 @@ namespace DP.TowerDefense
             _gameManager = GameClient.Get<IGameManager>();
         }
 
+        public void StopWaves()
+        {
+            StopSpawnCoroutine();
+        }
+
         public void Update()
         {
             if (_gameManager.IsGameRunning)
@@ -43,8 +48,7 @@ namespace DP.TowerDefense
                             StartWave();
                             break;
                         case Enumerators.WaveState.SPAWNING:
-                            if (_spawnWaveCoroutine != null)
-                                MainApp.Instance.StopCoroutine(_spawnWaveCoroutine);
+                            StopSpawnCoroutine();
 
                             if (_currentWaveIndex + 1 >= _gameManager.LevelController.CurrentLevel.LevelSettings.waves.Length)
                             {
@@ -60,6 +64,12 @@ namespace DP.TowerDefense
 
                 _countdown -= Time.deltaTime;
             }
+        }
+
+        private void StopSpawnCoroutine()
+        {
+            if (_spawnWaveCoroutine != null)
+                MainApp.Instance.StopCoroutine(_spawnWaveCoroutine);
         }
 
         private void StartWave()

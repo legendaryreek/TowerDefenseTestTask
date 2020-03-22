@@ -13,7 +13,7 @@ namespace DP.TowerDefense
             prefab = GameClient.Get<ILoadObjectsManager>().GetObjectByPath<GameObject>(Constants.PATH_TO_GAMEPLAY_PREFABS + "Enemies/Enemy_1");
         }
 
-        public FirstTypeEnemy(Transform enemySpawnPoint, Transform[] wavepoints) : base(prefab, enemySpawnPoint, wavepoints)
+        public FirstTypeEnemy(Transform enemySpawnPoint, Transform[] wavepoints, Transform container) : base(prefab, enemySpawnPoint, wavepoints, container)
         {
         }
     }

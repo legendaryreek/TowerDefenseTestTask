@@ -8,13 +8,17 @@ namespace DP.TowerDefense
 {
     public class EnemyController
     {
-        private IGameManager _gameManager;
+        public List<Enemy> Enemies { get; private set; }
 
-        private List<Enemy> _enemies;
+        private IGameManager _gameManager;
         private Enumerators.EnemyType[] _enemyTypes;
+
+        private Transform _enemiesContainer;
 
         public EnemyController()
         {
+            _enemiesContainer = new GameObject("EnemiesContainer").transform;
+
             var enemyTypes = Enum.GetValues(typeof(Enumerators.EnemyType));
             _enemyTypes = new Enumerators.EnemyType[enemyTypes.Length];
             for (int i = 0; i < _enemyTypes.Length; i++)
@@ -22,13 +26,26 @@ namespace DP.TowerDefense
             
             _gameManager = GameClient.Get<IGameManager>();
 
-            _enemies = new List<Enemy>();
+            Enemies = new List<Enemy>();
         }
 
         public void Update()
         {
-            for (int i = 0; i < _enemies.Count; i++)
-                _enemies[i].Update();
+            for (int i = 0; i < Enemies.Count; i++)
+            {
+                Enemies[i].Update();
+
+                if (!Enemies[i].IsAlive)
+                {
+                    Enemies.RemoveAt(i);
+                    i--;
+                }
+            }
+
+            if (_gameManager.WaveController.IsLastWaveFinished && Enemies.Count == 0)
+            {
+                _gameManager.CompleteLevel();
+            }
         }
 
         public void SpawnRandomEnemy()
@@ -43,16 +60,16 @@ namespace DP.TowerDefense
             switch (enemyType)
             {
                 case Enumerators.EnemyType.FIRST_TYPE:
-                    enemy = new FirstTypeEnemy(_gameManager.LevelController.CurrentLevel.EnemySpawnPoint, _gameManager.LevelController.CurrentLevel.EnemyWaypoints);
+                    enemy = new FirstTypeEnemy(_gameManager.LevelController.CurrentLevel.EnemySpawnPoint, _gameManager.LevelController.CurrentLevel.EnemyWaypoints, _enemiesContainer);
                     break;
                 case Enumerators.EnemyType.SECOND_TYPE:
-                    enemy = new SecondTypeEnemy(_gameManager.LevelController.CurrentLevel.EnemySpawnPoint, _gameManager.LevelController.CurrentLevel.EnemyWaypoints);
+                    enemy = new SecondTypeEnemy(_gameManager.LevelController.CurrentLevel.EnemySpawnPoint, _gameManager.LevelController.CurrentLevel.EnemyWaypoints, _enemiesContainer);
                     break;
                 case Enumerators.EnemyType.THIRD_TYPE:
-                    enemy = new ThirdTypeEnemy(_gameManager.LevelController.CurrentLevel.EnemySpawnPoint, _gameManager.LevelController.CurrentLevel.EnemyWaypoints);
+                    enemy = new ThirdTypeEnemy(_gameManager.LevelController.CurrentLevel.EnemySpawnPoint, _gameManager.LevelController.CurrentLevel.EnemyWaypoints, _enemiesContainer);
                     break;
                 case Enumerators.EnemyType.FOURTH_TYPE:
-                    enemy = new FourthTypeEnemy(_gameManager.LevelController.CurrentLevel.EnemySpawnPoint, _gameManager.LevelController.CurrentLevel.EnemyWaypoints);
+                    enemy = new FourthTypeEnemy(_gameManager.LevelController.CurrentLevel.EnemySpawnPoint, _gameManager.LevelController.CurrentLevel.EnemyWaypoints, _enemiesContainer);
                     break;
                 default:
                     Debug.LogError("An enemy of this type does not exist!");
@@ -61,7 +78,7 @@ namespace DP.TowerDefense
 
             enemy.OnEnemyReachedEndOfWayEvent += OnEnemyReachedEndOfWayEventHandler;
             enemy.OnEnemyDiedEvent += OnEnemyDiedEventHandler;
-            _enemies.Add(enemy);
+            Enemies.Add(enemy);
         }
 
         private void OnEnemyReachedEndOfWayEventHandler(Enemy enemy)
@@ -79,7 +96,7 @@ namespace DP.TowerDefense
         {
             _gameManager.PlayerController.ChangeCoinsAmount(enemy.CoinsAmount);
             enemy.Dispose();
-            _enemies.Remove(enemy);
+            Enemies.Remove(enemy);
         }
     }
 }

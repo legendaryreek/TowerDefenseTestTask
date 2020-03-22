@@ -13,20 +13,29 @@ namespace DP.TowerDefense
         public GameSettings GameSettings { get; private set; }
         public bool IsGameRunning { get; set; }
 
+        public Camera MainCamera { get; private set; }
+
         public EnemyController EnemyController { get; private set; }
         public LevelController LevelController { get; private set; }
         public WaveController WaveController { get; private set; }
         public PlayerController PlayerController { get; private set; }
+        public TowerController TowerController { get; private set; }
 
+        private IUIManager _uIManager;
 
         public void Init()
         {
+            _uIManager = GameClient.Get<IUIManager>();
+
+            MainCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
+
             GameSettings = GameClient.Get<ILoadObjectsManager>().GetObjectByPath<GameSettings>("ScriptableObjects/GameSettings");
             
             LevelController = new LevelController();
             EnemyController = new EnemyController();
             WaveController = new WaveController();
             PlayerController = new PlayerController();
+            TowerController = new TowerController();
         }
 
         public void Dispose()
@@ -36,8 +45,12 @@ namespace DP.TowerDefense
 
         public void Update()
         {
-            WaveController.Update();
-            EnemyController.Update();
+            if (IsGameRunning)
+            {
+                WaveController.Update();
+                EnemyController.Update();
+                TowerController.Update();
+            }
         }
 
         public void PauseGame()
@@ -59,11 +72,30 @@ namespace DP.TowerDefense
             LevelController.StartLevel();
             WaveController.InitWaves();
             PlayerController.StartLevel();
+            TowerController.StartLevel();
         }
 
         public void StopGame()
         {
             IsGameRunning = false;
+
+            WaveController.StopWaves();
+        }
+
+        public void CompleteLevel()
+        {
+            Debug.LogError("Complete level");
+
+            StopGame();
+            //_uIManager.DrawPopup<CompleteLevelPopup>();
+        }
+
+        public void GameOver()
+        {
+            Debug.LogError("Game over");
+
+            StopGame();
+            //_uIManager.DrawPopup<GameOverPopup>();
         }
     }
 }

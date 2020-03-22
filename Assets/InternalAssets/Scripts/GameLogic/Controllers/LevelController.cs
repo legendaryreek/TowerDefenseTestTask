@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,6 +38,7 @@ namespace DP.TowerDefense
 
         public Transform EnemySpawnPoint { get; private set; }
         public Transform[] EnemyWaypoints { get; private set; }
+        public GameObject[] TowerSlots { get; private set; }
 
         public Level(LevelSettings levelSettings)
         {
@@ -47,6 +49,16 @@ namespace DP.TowerDefense
 
             EnemySpawnPoint = _selfTransform.Find("EnemySpawnPoint");
             SetEnemyWaypoints();
+            SetTowerSlots();
+        }
+
+        private void SetTowerSlots()
+        {
+            Transform towerSlotsContainer = _selfTransform.Find("TowerSlots");
+            TowerSlots = new GameObject[towerSlotsContainer.childCount];
+
+            for (int i = 0; i < TowerSlots.Length; i++)
+                TowerSlots[i] = towerSlotsContainer.GetChild(i).gameObject;
         }
 
         private void SetEnemyWaypoints()

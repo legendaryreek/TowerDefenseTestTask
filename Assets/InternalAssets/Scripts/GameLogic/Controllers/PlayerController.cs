@@ -39,6 +39,10 @@ namespace DP.TowerDefense
         public void Damage(int damageAmount)
         {
             Health -= damageAmount;
+
+            if (Health < 0)
+                Health = 0;
+
             OnHealthAmountChangedEvent?.Invoke(Health);
             
             if (Health <= 0)
@@ -48,6 +52,7 @@ namespace DP.TowerDefense
         private void Die()
         {
             OnPlayerDiedEvent?.Invoke();
+            _gameManager.GameOver();
         }
     }
 }
