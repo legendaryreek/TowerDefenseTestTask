@@ -10,13 +10,21 @@ namespace DP.TowerDefense
         public Action OnRestartGame { get; set; }
         public Action OnStartGame { get; set; }
 
+        public GameSettings GameSettings { get; private set; }
         public bool IsGameRunning { get; set; }
 
-        private LevelController _levelController;
+        public EnemyController EnemyController { get; private set; }
+        public LevelController LevelController { get; private set; }
+        public WaveController WaveController { get; private set; }
+
 
         public void Init()
         {
-            _levelController = new LevelController();
+            GameSettings = GameClient.Get<ILoadObjectsManager>().GetObjectByPath<GameSettings>("ScriptableObjects/GameSettings");
+            
+            LevelController = new LevelController();
+            EnemyController = new EnemyController();
+            WaveController = new WaveController();
         }
 
         public void Dispose()
@@ -26,7 +34,8 @@ namespace DP.TowerDefense
 
         public void Update()
         {
-
+            WaveController.Update();
+            EnemyController.Update();
         }
 
         public void PauseGame()
@@ -45,7 +54,8 @@ namespace DP.TowerDefense
 
             OnStartGame?.Invoke();
 
-            _levelController.StartLevel();
+            LevelController.StartLevel();
+            WaveController.InitWaves();
         }
 
         public void StopGame()

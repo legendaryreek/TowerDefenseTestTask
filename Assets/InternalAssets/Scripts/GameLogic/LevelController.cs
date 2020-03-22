@@ -6,14 +6,15 @@ namespace DP.TowerDefense
 {
     public class LevelController
     {
-        private GameObject[] _levelPrefabs;
-        private GameObject _currentLevel;
+        public Level CurrentLevel { get; private set; }
+
+        private IGameManager _gameManager;
 
         private int _currentLevelIndex;
 
         public LevelController()
         {
-            _levelPrefabs = GameClient.Get<ILoadObjectsManager>().GetAllObjectsByPath<GameObject>(Constants.PATH_TO_GAMEPLAY_PREFABS + "Levels");
+            _gameManager = GameClient.Get<IGameManager>();
         }
 
         public void StartLevel()
@@ -23,7 +24,38 @@ namespace DP.TowerDefense
 
         private void SpawnLevel()
         {
-            _currentLevel = MonoBehaviour.Instantiate(_levelPrefabs[_currentLevelIndex]);
+            CurrentLevel = new Level(_gameManager.GameSettings.levels[_currentLevelIndex]);
+        }
+    }
+
+    public class Level
+    {
+        private GameObject _selfObject;
+        private Transform _selfTransform;
+
+        public LevelSettings LevelSettings { get; private set; }
+
+        public Transform EnemySpawnPoint { get; private set; }
+        public Transform[] EnemyWaypoints { get; private set; }
+
+        public Level(LevelSettings levelSettings)
+        {
+            LevelSettings = levelSettings;
+
+            _selfObject = GameObject.Instantiate(levelSettings.prefab);
+            _selfTransform = _selfObject.transform;
+
+            EnemySpawnPoint = _selfTransform.Find("EnemySpawnPoint");
+            SetEnemyWaypoints();
+        }
+
+        private void SetEnemyWaypoints()
+        {
+            Transform enemyWaypointsContainer = _selfTransform.Find("EnemyWaypoints");
+            EnemyWaypoints = new Transform[enemyWaypointsContainer.childCount];
+
+            for (int i = 0; i < EnemyWaypoints.Length; i++)
+                EnemyWaypoints[i] = enemyWaypointsContainer.GetChild(i);
         }
     }
 }

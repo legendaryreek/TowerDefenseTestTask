@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 364227618ee96864fa8ef4a8e5ce125e, type: 3}
+  m_Name: GameSettings
+  m_EditorClassIdentifier: 
+  levels:
+  - prefab: {fileID: 312634479450286675, guid: fad7544ee1e09d342a80d5f9a7a9f049, type: 3}
+    waves:
+    - duration: 2
+      delayBeforeStartWave: 2
+      delayBetweenSpawning: 1
+    - duration: 3
+      delayBeforeStartWave: 5
+      delayBetweenSpawning: 1
+    - duration: 4
+      delayBeforeStartWave: 4
+      delayBetweenSpawning: 1
+    - duration: 5
+      delayBeforeStartWave: 3
+      delayBetweenSpawning: 1
+    - duration: 6
+      delayBeforeStartWave: 2
+      delayBetweenSpawning: 1
