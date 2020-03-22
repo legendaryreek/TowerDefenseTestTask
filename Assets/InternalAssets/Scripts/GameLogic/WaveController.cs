@@ -8,6 +8,8 @@ namespace DP.TowerDefense
 {
     public class WaveController
     {
+        public event Action<int, int> OnWaveChangedEvent;
+
         public bool IsLastWaveFinished { get; private set; }
 
         private IGameManager _gameManager;
@@ -73,6 +75,8 @@ namespace DP.TowerDefense
             _currentWaveIndex++;
             _currentWaveSettings = _gameManager.LevelController.CurrentLevel.LevelSettings.waves[_currentWaveIndex];
             _countdown = _currentWaveSettings.delayBeforeStartWave;
+
+            OnWaveChangedEvent?.Invoke(_currentWaveIndex + 1, _gameManager.LevelController.CurrentLevel.LevelSettings.waves.Length);
         }
 
         private IEnumerator SpawnWave()
@@ -91,6 +95,8 @@ namespace DP.TowerDefense
             _countdown = _currentWaveSettings.delayBeforeStartWave;
             _waveState = Enumerators.WaveState.WAIT_NEXT_WAVE;
             IsLastWaveFinished = false;
+
+            OnWaveChangedEvent?.Invoke(_currentWaveIndex + 1, _gameManager.LevelController.CurrentLevel.LevelSettings.waves.Length);
         }
     }
 }

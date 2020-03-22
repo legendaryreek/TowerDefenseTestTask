@@ -34,8 +34,8 @@
 
             AddService<ILoadObjectsManager>(new LoadObjectsManager());
             AddService<IAppStateManager>(new AppStateManager());
-            AddService<IUIManager>(new UIManager());
             AddService<IGameManager>(new GameManager());
+            AddService<IUIManager>(new UIManager());
         }
 
         public static T Get<T>()

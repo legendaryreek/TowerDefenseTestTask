@@ -40,6 +40,7 @@ namespace DP.TowerDefense
                 case Enumerators.AppState.Main:
                     break;
                 case Enumerators.AppState.Gameplay:
+                    GameClient.Get<IUIManager>().SetPage<GameplayPage>();
                     GameClient.Get<IGameManager>().StartGame();
                     break;
             }

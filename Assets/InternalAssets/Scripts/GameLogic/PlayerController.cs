@@ -9,6 +9,7 @@ namespace DP.TowerDefense
     {
         public event Action OnPlayerDiedEvent;
         public event Action<int> OnCoinsAmountChangedEvent;
+        public event Action<int> OnHealthAmountChangedEvent;
 
         public int Coins { get; private set; }
         public int Health { get; private set; }
@@ -24,21 +25,22 @@ namespace DP.TowerDefense
         {
             Coins = _gameManager.LevelController.CurrentLevel.LevelSettings.playerCoinsAmount;
             Health = _gameManager.LevelController.CurrentLevel.LevelSettings.playerHealthAmount;
+            
+            OnCoinsAmountChangedEvent?.Invoke(Coins);
+            OnHealthAmountChangedEvent?.Invoke(Health);
         }
 
         public void ChangeCoinsAmount(int coinsDelta)
         {
             Coins += coinsDelta;
             OnCoinsAmountChangedEvent?.Invoke(Coins);
-
-            Debug.LogError("Coins: " + Coins);
         }
 
         public void Damage(int damageAmount)
         {
             Health -= damageAmount;
-            Debug.LogError("Health: " + Health);
-
+            OnHealthAmountChangedEvent?.Invoke(Health);
+            
             if (Health <= 0)
                 Die();
         }

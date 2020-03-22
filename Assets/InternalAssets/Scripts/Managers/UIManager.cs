@@ -38,7 +38,7 @@ namespace DP.TowerDefense
             PopupsContainer = Canvas.transform.Find("PopupsContainer").GetComponent<RectTransform>();
 
             _uiPages = new List<IUIElement>();
-            
+            _uiPages.Add(new GameplayPage());
 
             foreach (var page in _uiPages)
                 page.Init();
