@@ -41,6 +41,9 @@ namespace DP.TowerDefense
         public void Dispose()
         {
             GameObject.Destroy(_selfObject);
+
+            foreach (var bullet in _bullets)
+                bullet.Dispose();
         }
 
         public void Update()
