@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22be117d61798544d80ad649e970bf26, type: 3}
+  m_Name: TowerSettingsData
+  m_EditorClassIdentifier: 
+  towerSettings:
+  - towerType: 0
+    prefab: {fileID: 4914201323950325457, guid: 68238f40a97b73d4da4ba6dfc52dc1c0,
+      type: 3}
+    buiildPrice: 50
+    range: 2
+    shootInterval: 2
+    damage: 3
+  - towerType: 1
+    prefab: {fileID: 4914201323950325457, guid: 3c02608cfc3f8624a9d2f756b7f03043,
+      type: 3}
+    buiildPrice: 70
+    range: 2.25
+    shootInterval: 1.75
+    damage: 5
+  - towerType: 2
+    prefab: {fileID: 4914201323950325457, guid: f31340b90a2250248af157d437bdecb6,
+      type: 3}
+    buiildPrice: 80
+    range: 2.5
+    shootInterval: 1.5
+    damage: 7
+  - towerType: 3
+    prefab: {fileID: 4914201323950325457, guid: b46410a1f98a6824197678af1882e92d,
+      type: 3}
+    buiildPrice: 100
+    range: 3
+    shootInterval: 1
+    damage: 10

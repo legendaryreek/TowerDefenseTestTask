@@ -9,8 +9,7 @@ namespace DP.TowerDefense
     {
         public Action OnRestartGame { get; set; }
         public Action OnStartGame { get; set; }
-
-        public GameSettings GameSettings { get; private set; }
+        
         public bool IsGameRunning { get; set; }
 
         public Camera MainCamera { get; private set; }
@@ -28,9 +27,7 @@ namespace DP.TowerDefense
             _uIManager = GameClient.Get<IUIManager>();
 
             MainCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
-
-            GameSettings = GameClient.Get<ILoadObjectsManager>().GetObjectByPath<GameSettings>("ScriptableObjects/GameSettings");
-            
+                        
             LevelController = new LevelController();
             EnemyController = new EnemyController();
             WaveController = new WaveController();

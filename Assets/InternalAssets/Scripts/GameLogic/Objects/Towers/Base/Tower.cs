@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DP.TowerDefense.Common;
+using DP.TowerDefense.Utils;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,16 +22,28 @@ namespace DP.TowerDefense
         private float _range = 2.5f;
         private float _shootInterval = 1f;
         private int _damage = 5;
+        private int _buildPrice;
         private float _countdownToShoot;
 
         private bool _isCoolsDown;
 
-        public Tower(GameObject prefab, Transform spawnPoint, Transform container)
+        public Tower(Enumerators.TowerType towerType, Transform spawnPoint, Transform container)
         {
             _bullets = new List<Bullet>();
 
             _gameManager = GameClient.Get<IGameManager>();
-            SpawnTower(prefab, spawnPoint, container);
+
+            TowerSettings towerSettings = SettingsDataUtils.GetTowerSettingsByType(towerType);
+            SetTowerParams(towerSettings);
+            SpawnTower(towerSettings.prefab, spawnPoint, container);
+        }
+
+        private void SetTowerParams(TowerSettings towerSettings)
+        {
+            _range = towerSettings.range;
+            _shootInterval = towerSettings.shootInterval;
+            _damage = towerSettings.damage;
+            _buildPrice = towerSettings.buiildPrice;
         }
 
         public void Dispose()

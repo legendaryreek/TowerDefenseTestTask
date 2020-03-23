@@ -5,8 +5,8 @@ using System;
 
 namespace DP.TowerDefense
 {
-    [CreateAssetMenu(fileName = "GameSettings", menuName = "Game Settings")]
-    public class GameSettings : ScriptableObject
+    [CreateAssetMenu(fileName = "LevelSettingsData", menuName = "Level Settings Data")]
+    public class LevelSettingsData : ScriptableObject
     {
         public LevelSettings[] levels;
     }

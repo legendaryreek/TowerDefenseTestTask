@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using DP.TowerDefense.Common;
 
 namespace DP.TowerDefense
 {
@@ -56,7 +57,7 @@ namespace DP.TowerDefense
                         {
                             Debug.LogError("Build Tower");
 
-                            towerSlot.BuildTower();
+                            towerSlot.BuildTower(Enumerators.TowerType.FOURTH_TYPE);
                         }
                         else
                         {

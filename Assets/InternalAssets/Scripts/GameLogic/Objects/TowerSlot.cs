@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DP.TowerDefense.Common;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,10 +34,10 @@ namespace DP.TowerDefense
             return _selfObject == other;
         }
 
-        public void BuildTower()
+        public void BuildTower(Enumerators.TowerType towerType)
         {
             IsEmpty = false;
-            _tower = new Tower(GameClient.Get<ILoadObjectsManager>().GetObjectByPath<GameObject>(Constants.PATH_TO_GAMEPLAY_PREFABS + "Towers/Tower_1"), _towerBuildPoint, _selfObject.transform);
+            _tower = new Tower(towerType, _towerBuildPoint, _selfObject.transform);
         }
 
         public void SellTower()

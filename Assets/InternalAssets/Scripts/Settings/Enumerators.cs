@@ -1,4 +1,6 @@
-﻿namespace DP.TowerDefense.Common
+﻿using System;
+
+namespace DP.TowerDefense.Common
 {
     public class Enumerators
     {
@@ -12,6 +14,14 @@
         }
 
         public enum EnemyType
+        {
+            FIRST_TYPE,
+            SECOND_TYPE,
+            THIRD_TYPE,
+            FOURTH_TYPE,
+        }
+
+        public enum TowerType
         {
             FIRST_TYPE,
             SECOND_TYPE,

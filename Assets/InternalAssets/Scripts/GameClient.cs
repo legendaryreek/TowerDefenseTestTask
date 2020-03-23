@@ -34,6 +34,7 @@
 
             AddService<ILoadObjectsManager>(new LoadObjectsManager());
             AddService<IAppStateManager>(new AppStateManager());
+            AddService<IDataManager>(new DataManager());
             AddService<IGameManager>(new GameManager());
             AddService<IUIManager>(new UIManager());
         }

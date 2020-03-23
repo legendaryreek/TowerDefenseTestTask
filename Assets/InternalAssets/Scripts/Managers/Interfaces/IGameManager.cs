@@ -4,7 +4,6 @@ namespace DP.TowerDefense
 {
     public interface IGameManager
     {
-        GameSettings GameSettings { get; }
         bool IsGameRunning { get; }
 
         Camera MainCamera { get; }

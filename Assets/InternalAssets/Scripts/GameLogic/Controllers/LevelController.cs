@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DP.TowerDefense.Utils;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,11 +12,16 @@ namespace DP.TowerDefense
 
         private IGameManager _gameManager;
 
+        private LevelSettings[] _levelSettings;
+
         private int _currentLevelIndex;
 
         public LevelController()
         {
             _gameManager = GameClient.Get<IGameManager>();
+            _currentLevelIndex = 0;
+
+            _levelSettings = GameClient.Get<IDataManager>().GetScriptableObject<LevelSettingsData>().levels;
         }
 
         public void StartLevel()
@@ -25,7 +31,7 @@ namespace DP.TowerDefense
 
         private void SpawnLevel()
         {
-            CurrentLevel = new Level(_gameManager.GameSettings.levels[_currentLevelIndex]);
+            CurrentLevel = new Level(_levelSettings[_currentLevelIndex]);
         }
     }
 
