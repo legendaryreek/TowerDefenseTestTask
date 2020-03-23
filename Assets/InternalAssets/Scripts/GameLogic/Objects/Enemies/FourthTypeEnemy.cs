@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DP.TowerDefense.Common;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,14 +7,9 @@ namespace DP.TowerDefense
 {
     public class FourthTypeEnemy : Enemy
     {
-        private static GameObject prefab;
+        private const Enumerators.EnemyType enemyType = Enumerators.EnemyType.FOURTH_TYPE;
 
-        static FourthTypeEnemy()
-        {
-            prefab = GameClient.Get<ILoadObjectsManager>().GetObjectByPath<GameObject>(Constants.PATH_TO_GAMEPLAY_PREFABS + "Enemies/Enemy_4");
-        }
-
-        public FourthTypeEnemy(Transform enemySpawnPoint, Transform[] wavepoints, Transform container) : base(prefab, enemySpawnPoint, wavepoints, container)
+        public FourthTypeEnemy(Transform enemySpawnPoint, Transform[] wavepoints, Transform container) : base(enemyType, enemySpawnPoint, wavepoints, container)
         {
         }
     }

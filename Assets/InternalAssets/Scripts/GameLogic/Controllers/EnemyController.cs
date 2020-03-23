@@ -94,7 +94,7 @@ namespace DP.TowerDefense
 
         private void KillEnemy(Enemy enemy)
         {
-            _gameManager.PlayerController.ChangeCoinsAmount(enemy.CoinsAmount);
+            _gameManager.PlayerController.ChangeCoinsAmount(enemy.KillReward);
             enemy.Dispose();
             Enemies.Remove(enemy);
         }

@@ -38,24 +38,9 @@ namespace DP.TowerDefense
             SpawnTower(towerSettings.prefab, spawnPoint, container);
         }
 
-        private void SetTowerParams(TowerSettings towerSettings)
-        {
-            _range = towerSettings.range;
-            _shootInterval = towerSettings.shootInterval;
-            _damage = towerSettings.damage;
-            _buildPrice = towerSettings.buiildPrice;
-        }
-
         public void Dispose()
         {
             GameObject.Destroy(_selfObject);
-        }
-
-        private void SpawnTower(GameObject prefab, Transform spawnPoint, Transform container)
-        {
-            _selfObject = GameObject.Instantiate(prefab, spawnPoint.position, spawnPoint.rotation, container);
-            _selfTransform = _selfObject.transform;
-            _gunTransform = _selfTransform.Find("Body/Gun");
         }
 
         public void Update()
@@ -73,6 +58,26 @@ namespace DP.TowerDefense
                     i--;
                 }
             }
+        }
+
+        public void Sell()
+        {
+            Dispose();
+        }
+
+        private void SetTowerParams(TowerSettings towerSettings)
+        {
+            _range = towerSettings.range;
+            _shootInterval = towerSettings.shootInterval;
+            _damage = towerSettings.damage;
+            _buildPrice = towerSettings.buiildPrice;
+        }
+
+        private void SpawnTower(GameObject prefab, Transform spawnPoint, Transform container)
+        {
+            _selfObject = GameObject.Instantiate(prefab, spawnPoint.position, spawnPoint.rotation, container);
+            _selfTransform = _selfObject.transform;
+            _gunTransform = _selfTransform.Find("Body/Gun");
         }
 
         private void CoolsDown()
@@ -118,11 +123,6 @@ namespace DP.TowerDefense
         private void OnBulletHitTargetEventHandler(Bullet bullet, Enemy targetEnemy)
         {
             targetEnemy.Damage(_damage);
-        }
-
-        public void Sell()
-        {
-            Dispose();
         }
     }
 }

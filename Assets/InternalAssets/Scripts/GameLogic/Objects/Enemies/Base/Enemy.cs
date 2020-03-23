@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DP.TowerDefense.Common;
+using DP.TowerDefense.Utils;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +17,7 @@ namespace DP.TowerDefense
         public bool IsAlive { get; private set; }
 
         public int DamageAmount { get; private set; } = 75;
-        public int CoinsAmount { get; private set; } = 5;
+        public int KillReward { get; private set; } = 5;
 
         public float TraveledDistance { get; private set; }
 
@@ -31,13 +33,23 @@ namespace DP.TowerDefense
 
         private Transform[] _wavepoints;
 
-        public Enemy(GameObject prefab, Transform enemySpawnPoint, Transform[] wavepoints, Transform container)
+        public Enemy(Enumerators.EnemyType enemyType, Transform enemySpawnPoint, Transform[] wavepoints, Transform container)
         {
             _wavepoints = wavepoints;
 
-            SpawnEnemy(prefab, enemySpawnPoint, container);
+            EnemySettings enemySettings = SettingsDataUtils.GetEnemySettingsByType(enemyType);
+            SetEnemyParams(enemySettings);
+            SpawnEnemy(enemySettings.prefab, enemySpawnPoint, container);
             _wavepointIndex = 0;
             _targetWavepoint = _wavepoints[0];
+        }
+
+        private void SetEnemyParams(EnemySettings enemySettings)
+        {
+            _speed = enemySettings.speed;
+            _health = enemySettings.health;
+            DamageAmount = enemySettings.damage;
+            KillReward = UnityEngine.Random.Range(enemySettings.minKillReward, enemySettings.maxKillReward + 1);
         }
 
         public void Dispose()
