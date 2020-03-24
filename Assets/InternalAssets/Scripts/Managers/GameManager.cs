@@ -77,6 +77,7 @@ namespace DP.TowerDefense
             IsGameRunning = false;
 
             _uIManager.HidePopup<BuildTowerPopup>();
+            _uIManager.HidePopup<TowerPopup>();
 
             WaveController.StopWaves();
         }

@@ -91,6 +91,8 @@ namespace DP.TowerDefense
 
         public void Show()
         {
+            _uiManager.HidePopup<TowerPopup>();
+
             _selfPopup.SetActive(true);
 
             _gameManager.PlayerController.OnCoinsAmountChangedEvent += OnCoinsAmountChangedEventHandler;

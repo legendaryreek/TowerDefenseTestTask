@@ -56,25 +56,28 @@ namespace DP.TowerDefense
                     var towerSlot = _towerSlots.FirstOrDefault(x => x.EqualsGO(hit.collider.transform.parent.gameObject));
 
                     if (towerSlot != null)
-                    {
-                        if (towerSlot.IsEmpty)
-                        {
-                            Debug.LogError("Build Tower");
-
-                            _uiManager.DrawPopup<BuildTowerPopup>(new BuildTowerPopupInfo()
-                            {
-                                selectedTowerSlot = towerSlot,
-                                towerSlotScreenPosition = _gameManager.MainCamera.WorldToScreenPoint(towerSlot.TowerSlotPosition),
-                            });
-                        }
-                        else
-                        {
-                            Debug.LogError("Sell Tower");
-
-                            towerSlot.SellTower();
-                        }
-                    }
+                        SelectTowerSlot(towerSlot);
                 }                
+            }
+        }
+
+        private void SelectTowerSlot(TowerSlot towerSlot)
+        {
+            if (towerSlot.IsEmpty)
+            {
+                _uiManager.DrawPopup<BuildTowerPopup>(new BuildTowerPopupInfo()
+                {
+                    selectedTowerSlot = towerSlot,
+                    towerSlotScreenPosition = _gameManager.MainCamera.WorldToScreenPoint(towerSlot.TowerSlotPosition),
+                });
+            }
+            else
+            {
+                _uiManager.DrawPopup<TowerPopup>(new TowerPopupInfo()
+                {
+                    selectedTowerSlot = towerSlot,
+                    towerSlotScreenPosition = _gameManager.MainCamera.WorldToScreenPoint(towerSlot.TowerSlotPosition),
+                });
             }
         }
 
