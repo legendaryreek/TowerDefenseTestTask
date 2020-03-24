@@ -58,6 +58,11 @@ namespace DP.TowerDefense
         public void RestartGame()
         {
             OnRestartGame?.Invoke();
+
+            LevelController.Dispose();
+            EnemyController.Dispose();
+
+            StartGame();
         }
 
         public void StartGame()
@@ -84,18 +89,14 @@ namespace DP.TowerDefense
 
         public void CompleteLevel()
         {
-            Debug.LogError("Complete level");
-
             StopGame();
-            //_uIManager.DrawPopup<CompleteLevelPopup>();
+            _uIManager.DrawPopup<LevelCompletedPopup>();
         }
 
         public void GameOver()
         {
-            Debug.LogError("Game over");
-
             StopGame();
-            //_uIManager.DrawPopup<GameOverPopup>();
+            _uIManager.DrawPopup<GameOverPopup>();
         }
     }
 }

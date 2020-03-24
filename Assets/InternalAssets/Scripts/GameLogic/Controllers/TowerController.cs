@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Linq;
 using DP.TowerDefense.Common;
 using DP.TowerDefense.Utils;
+using UnityEngine.EventSystems;
 
 namespace DP.TowerDefense
 {
@@ -17,6 +18,8 @@ namespace DP.TowerDefense
 
         private TowerSlot[] _towerSlots;
 
+        private bool _isRaycastAllowed;
+
         public TowerController()
         {
             _gameManager = GameClient.Get<IGameManager>();
@@ -27,6 +30,9 @@ namespace DP.TowerDefense
 
         public void Update()
         {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+                _isRaycastAllowed = !Utilites.IsPointerOverUIElement(Input.mousePosition);
+
             if (Input.GetKeyUp(KeyCode.Mouse0))
                 SendRaycastToTowerSlot();
 
@@ -46,6 +52,11 @@ namespace DP.TowerDefense
 
         private void SendRaycastToTowerSlot()
         {
+            bool isPointerOverUI = Utilites.IsPointerOverUIElement(Input.mousePosition); //EventSystem.current.IsPointerOverGameObject();
+
+            if (isPointerOverUI || !_isRaycastAllowed)
+                return;
+
             RaycastHit hit;
             Ray ray = _gameManager.MainCamera.ScreenPointToRay(Input.mousePosition);
             

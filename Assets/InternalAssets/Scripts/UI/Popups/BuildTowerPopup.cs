@@ -104,6 +104,12 @@ namespace DP.TowerDefense
         {
             if (data != null && data is BuildTowerPopupInfo buildTowerPopupInfo)
             {
+                if (_selectedTowerSlot == buildTowerPopupInfo.selectedTowerSlot)
+                {
+                    Hide();
+                    return;
+                }
+
                 _container.anchoredPosition = Utilites.ScreenToCanvasPoint(_uiManager.Canvas, buildTowerPopupInfo.towerSlotScreenPosition);
                 _selectedTowerSlot = buildTowerPopupInfo.selectedTowerSlot;
             }

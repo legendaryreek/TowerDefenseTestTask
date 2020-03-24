@@ -29,6 +29,14 @@ namespace DP.TowerDefense
             Enemies = new List<Enemy>();
         }
 
+        public void Dispose()
+        {
+            foreach (var enemy in Enemies)
+                enemy.Dispose();
+
+            Enemies.Clear();
+        }
+
         public void Update()
         {
             for (int i = 0; i < Enemies.Count; i++)
@@ -43,9 +51,7 @@ namespace DP.TowerDefense
             }
 
             if (_gameManager.WaveController.IsLastWaveFinished && Enemies.Count == 0)
-            {
                 _gameManager.CompleteLevel();
-            }
         }
 
         public void SpawnRandomEnemy()

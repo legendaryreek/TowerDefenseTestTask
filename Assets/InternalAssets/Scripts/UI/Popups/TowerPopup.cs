@@ -87,6 +87,12 @@ namespace DP.TowerDefense
         {
             if (data != null && data is TowerPopupInfo towerPopupInfo)
             {
+                if (_selectedTowerSlot == towerPopupInfo.selectedTowerSlot)
+                {
+                    Hide();
+                    return;
+                }
+
                 _container.anchoredPosition = Utilites.ScreenToCanvasPoint(_uiManager.Canvas, towerPopupInfo.towerSlotScreenPosition);
                 _selectedTowerSlot = towerPopupInfo.selectedTowerSlot;
                 _sellTowerButtonLabelText.text = "SELL" + "\n<b>" + SettingsDataUtils.GetTowerSettingsByType(_selectedTowerSlot.TowerType).buildPrice + "$</b>";

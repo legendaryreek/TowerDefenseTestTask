@@ -46,6 +46,8 @@ namespace DP.TowerDefense
             _uiPopups = new List<IUIPopup>();
             _uiPopups.Add(new BuildTowerPopup());
             _uiPopups.Add(new TowerPopup());
+            _uiPopups.Add(new GameOverPopup());
+            _uiPopups.Add(new LevelCompletedPopup());
 
             foreach (var popup in _uiPopups)
                 popup.Init();
