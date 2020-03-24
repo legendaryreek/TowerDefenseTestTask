@@ -8,7 +8,7 @@ namespace DP.TowerDefense
 {
     public interface IUIManager
     {
-        GameObject Canvas { get; }
+        Canvas Canvas { get; }
         CanvasScaler CanvasScaler { get; }
         RectTransform PopupsContainer { get; }
         RectTransform PagesContainer { get; }

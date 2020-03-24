@@ -9,6 +9,17 @@ namespace DP.TowerDefense
     public class TowerSlot
     {
         public bool IsEmpty { get; private set; }
+        public Enumerators.TowerType TowerType
+        {
+            get
+            {
+                if (_tower != null)
+                    return _tower.TowerType;
+
+                return Enumerators.TowerType.UNDEFINED;
+            }
+        }
+        public Vector3 TowerSlotPosition { get { return _selfObject.transform.position; } }
 
         private GameObject _selfObject;
         private Transform _towerBuildPoint;

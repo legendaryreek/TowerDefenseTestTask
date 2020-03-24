@@ -16,15 +16,15 @@ namespace DP.TowerDefense
 
         public bool IsAlive { get; private set; }
 
-        public int DamageAmount { get; private set; } = 75;
-        public int KillReward { get; private set; } = 5;
+        public int DamageAmount { get; private set; }
+        public int KillReward { get; private set; }
 
         public float TraveledDistance { get; private set; }
 
         private GameObject _selfObject;
 
-        private float _speed = 1f;
-        private int _health = 10;
+        private float _speed;
+        private int _health;
 
         private Transform _targetWavepoint;
         private int _wavepointIndex;

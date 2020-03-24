@@ -17,7 +17,7 @@ namespace DP.TowerDefense
     {
         public Enumerators.TowerType towerType;
         public GameObject prefab;
-        public int buiildPrice;
+        public int buildPrice;
         public float range;
         public float shootInterval;
         public int damage;

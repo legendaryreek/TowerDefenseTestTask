@@ -9,6 +9,7 @@ namespace DP.TowerDefense
 {
     public class Tower
     {
+        public Enumerators.TowerType TowerType { get; private set; }
         public int DamageAmount { get; private set; } = 5;
 
         private IGameManager _gameManager;
@@ -19,9 +20,9 @@ namespace DP.TowerDefense
 
         private List<Bullet> _bullets;
 
-        private float _range = 2.5f;
-        private float _shootInterval = 1f;
-        private int _damage = 5;
+        private float _range;
+        private float _shootInterval;
+        private int _damage;
         private int _buildPrice;
         private float _countdownToShoot;
 
@@ -29,6 +30,7 @@ namespace DP.TowerDefense
 
         public Tower(Enumerators.TowerType towerType, Transform spawnPoint, Transform container)
         {
+            TowerType = towerType;
             _bullets = new List<Bullet>();
 
             _gameManager = GameClient.Get<IGameManager>();
@@ -73,7 +75,7 @@ namespace DP.TowerDefense
             _range = towerSettings.range;
             _shootInterval = towerSettings.shootInterval;
             _damage = towerSettings.damage;
-            _buildPrice = towerSettings.buiildPrice;
+            _buildPrice = towerSettings.buildPrice;
         }
 
         private void SpawnTower(GameObject prefab, Transform spawnPoint, Transform container)

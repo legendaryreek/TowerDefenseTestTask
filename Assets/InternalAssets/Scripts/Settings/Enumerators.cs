@@ -23,6 +23,8 @@ namespace DP.TowerDefense.Common
 
         public enum TowerType
         {
+            UNDEFINED,
+
             FIRST_TYPE,
             SECOND_TYPE,
             THIRD_TYPE,

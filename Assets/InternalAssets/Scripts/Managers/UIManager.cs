@@ -15,7 +15,7 @@ namespace DP.TowerDefense
 
         public IUIElement CurrentPage { get; private set; }
 
-        public GameObject Canvas { get; private set; }
+        public Canvas Canvas { get; private set; }
         public CanvasScaler CanvasScaler { get; private set; }
         public RectTransform PopupsContainer { get; private set; }
         public RectTransform PagesContainer { get; private set; }
@@ -31,7 +31,7 @@ namespace DP.TowerDefense
 
         public void Init()
         {
-            Canvas = GameObject.Find("Canvas");
+            Canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
             CanvasScaler = Canvas.GetComponent<CanvasScaler>();
 
             PagesContainer = Canvas.transform.Find("PagesContainer").GetComponent<RectTransform>();
@@ -44,7 +44,7 @@ namespace DP.TowerDefense
                 page.Init();
             
             _uiPopups = new List<IUIPopup>();
-
+            _uiPopups.Add(new BuildTowerPopup());
 
             foreach (var popup in _uiPopups)
                 popup.Init();

@@ -41,14 +41,13 @@ namespace DP.TowerDefense
             _scriptableObjects = new Dictionary<string, ScriptableObject>();
 
             var scrObjects = GameClient.Get<ILoadObjectsManager>().GetAllObjectsByPath<ScriptableObject>(SCRIPTABLE_OBJECTS_PATH);
+
             foreach (var scrObj in scrObjects)
             {
                 var scrObjType = scrObj.GetType().FullName;
+
                 if (scrObjType != null)
-                {
-                    Debug.Log(scrObjType);
                     _scriptableObjects[scrObjType] = scrObj;
-                }
             }
         }
 
