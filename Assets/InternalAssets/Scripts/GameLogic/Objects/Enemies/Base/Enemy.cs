@@ -14,7 +14,7 @@ namespace DP.TowerDefense
         
         public Transform SelfTransform { get; private set; }
 
-        public bool IsAlive { get; private set; }
+        public bool IsActive { get; private set; }
 
         public int DamageAmount { get; private set; }
         public int KillReward { get; private set; }
@@ -26,22 +26,22 @@ namespace DP.TowerDefense
         private float _speed;
         private int _health;
 
-        private Transform _targetWavepoint;
-        private int _wavepointIndex;
+        private Transform _targetWaypoint;
+        private int _waypointIndex;
 
         private float _distanceToTargetPoint = 0.25f;
 
-        private Transform[] _wavepoints;
+        private Transform[] _waypoints;
 
         public Enemy(Enumerators.EnemyType enemyType, Transform enemySpawnPoint, Transform[] wavepoints, Transform container)
         {
-            _wavepoints = wavepoints;
+            _waypoints = wavepoints;
 
             EnemySettings enemySettings = SettingsDataUtils.GetEnemySettingsByType(enemyType);
             SetEnemyParams(enemySettings);
             SpawnEnemy(enemySettings.prefab, enemySpawnPoint, container);
-            _wavepointIndex = 0;
-            _targetWavepoint = _wavepoints[0];
+            _waypointIndex = 0;
+            _targetWaypoint = _waypoints[0];
         }
 
         private void SetEnemyParams(EnemySettings enemySettings)
@@ -54,6 +54,7 @@ namespace DP.TowerDefense
 
         public void Dispose()
         {
+            IsActive = false;
             GameObject.Destroy(_selfObject);
         }
 
@@ -75,34 +76,49 @@ namespace DP.TowerDefense
 
         private void Die()
         {
-            IsAlive = false;
             Dispose();
             OnEnemyDiedEvent?.Invoke(this);
         }
 
         private void Move()
         {
-            Vector3 direction = _targetWavepoint.position - SelfTransform.position;
-            SelfTransform.Translate(direction.normalized * _speed * Time.deltaTime, Space.World);
-            TraveledDistance += (direction.normalized * _speed * Time.deltaTime).magnitude;
+            Vector3 direction = _targetWaypoint.position - SelfTransform.position;
+            float moveDistance = (direction.normalized * _speed * Time.deltaTime).magnitude;
 
-            if (Vector3.Distance(_targetWavepoint.position, SelfTransform.position) <= _distanceToTargetPoint)
+            MoveToTargetWaypoint(moveDistance);
+        }
+
+        private void MoveToTargetWaypoint(float moveDistance)
+        {
+            float distanceToTargetWaypoint = Vector3.Distance(_targetWaypoint.position, SelfTransform.position);
+
+            SelfTransform.position = Vector3.MoveTowards(SelfTransform.position, _targetWaypoint.position, moveDistance);
+            TraveledDistance += moveDistance;
+
+            if (moveDistance >= distanceToTargetWaypoint)
             {
-                SetNextTargetWavePoint();
+                if (IsLastWaypoint())
+                {
+                    OnEnemyReachedEndOfWayEvent?.Invoke(this);
+                    return;
+                }
+                else
+                {
+                    NextTargetWaypoint();
+                    MoveToTargetWaypoint(moveDistance - distanceToTargetWaypoint);
+                }
             }
         }
 
-        private void SetNextTargetWavePoint()
+        private bool IsLastWaypoint()
         {
-            _wavepointIndex++;
+            return _waypointIndex + 1 >= _waypoints.Length;
+        }
 
-            if (_wavepointIndex >= _wavepoints.Length)
-            {
-                OnEnemyReachedEndOfWayEvent?.Invoke(this);
-                return;
-            }
-
-            _targetWavepoint = _wavepoints[_wavepointIndex];
+        private void NextTargetWaypoint()
+        {
+            _waypointIndex++;
+            _targetWaypoint = _waypoints[_waypointIndex];
         }
 
         private void SpawnEnemy(GameObject prefab, Transform enemySpawnPoint, Transform container)
@@ -110,7 +126,7 @@ namespace DP.TowerDefense
             _selfObject = GameObject.Instantiate(prefab, enemySpawnPoint.position, enemySpawnPoint.rotation, container);
             SelfTransform = _selfObject.transform;
             TraveledDistance = 0f;
-            IsAlive = true;
+            IsActive = true;
         }
     }
 }

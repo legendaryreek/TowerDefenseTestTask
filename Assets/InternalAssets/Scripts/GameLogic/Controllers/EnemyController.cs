@@ -43,7 +43,7 @@ namespace DP.TowerDefense
             {
                 Enemies[i].Update();
 
-                if (!Enemies[i].IsAlive)
+                if (!Enemies[i].IsActive)
                 {
                     Enemies.RemoveAt(i);
                     i--;
@@ -96,13 +96,13 @@ namespace DP.TowerDefense
         private void OnEnemyDiedEventHandler(Enemy enemy)
         {
             KillEnemy(enemy);
+            Enemies.Remove(enemy);
         }
 
         private void KillEnemy(Enemy enemy)
         {
             _gameManager.PlayerController.ChangeCoinsAmount(enemy.KillReward);
             enemy.Dispose();
-            Enemies.Remove(enemy);
         }
     }
 }
