@@ -22,12 +22,15 @@ namespace DP.TowerDefense
 
         private IUIManager _uIManager;
 
+        private float _fixedHorizontalFOV = 60f;
+
         public void Init()
         {
             _uIManager = GameClient.Get<IUIManager>();
 
             MainCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
-                        
+            MainCamera.fieldOfView = 2 * Mathf.Atan(Mathf.Tan(_fixedHorizontalFOV * Mathf.Deg2Rad * 0.5f) / (MainCamera.aspect / (4f / 3f))) * Mathf.Rad2Deg;
+
             LevelController = new LevelController();
             EnemyController = new EnemyController();
             WaveController = new WaveController();
