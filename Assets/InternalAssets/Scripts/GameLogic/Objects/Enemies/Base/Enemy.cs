@@ -93,7 +93,7 @@ namespace DP.TowerDefense
             float distanceToTargetWaypoint = Vector3.Distance(_targetWaypoint.position, SelfTransform.position);
 
             SelfTransform.position = Vector3.MoveTowards(SelfTransform.position, _targetWaypoint.position, moveDistance);
-            TraveledDistance += moveDistance;
+            TraveledDistance += Mathf.Min(moveDistance, distanceToTargetWaypoint);
 
             if (moveDistance >= distanceToTargetWaypoint)
             {

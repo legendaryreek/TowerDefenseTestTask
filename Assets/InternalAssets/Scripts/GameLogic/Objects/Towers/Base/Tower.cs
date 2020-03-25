@@ -99,8 +99,8 @@ namespace DP.TowerDefense
                 return;
 
             List<Enemy> sortedEnemies = new List<Enemy>(_gameManager.EnemyController.Enemies);
-            sortedEnemies.Sort((x, y) => (x.TraveledDistance < y.TraveledDistance) ? 1 : 0);
-            
+            sortedEnemies.Sort((x, y) => y.TraveledDistance.CompareTo(x.TraveledDistance));
+
             foreach (var enemy in sortedEnemies)
             {
                 if (Vector3.Distance(enemy.SelfTransform.position, _selfTransform.position) <= _range)
