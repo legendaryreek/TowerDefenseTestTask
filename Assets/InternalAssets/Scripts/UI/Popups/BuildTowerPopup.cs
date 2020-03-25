@@ -27,6 +27,8 @@ namespace DP.TowerDefense
 
         private List<BuildTowerButton> _buildTowerButtons;
 
+        private float _whiteSpaceToScreenBorders = 15f;
+
         public void Init()
         {
             _uiManager = GameClient.Get<IUIManager>();
@@ -44,6 +46,8 @@ namespace DP.TowerDefense
 
             foreach (var towerData in GameClient.Get<IDataManager>().GetScriptableObject<TowerSettingsData>().towerSettings)
                 CreateButton(towerData);
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_container);
 
             Hide();
         }
@@ -99,7 +103,7 @@ namespace DP.TowerDefense
 
             SetBuildButtonsEnablesState(_gameManager.PlayerController.Coins);
         }
-
+        
         public void Show(object data)
         {
             if (data != null && data is BuildTowerPopupInfo buildTowerPopupInfo)
@@ -110,13 +114,28 @@ namespace DP.TowerDefense
                     return;
                 }
 
-                _container.anchoredPosition = Utilites.ScreenToCanvasPoint(_uiManager.Canvas, buildTowerPopupInfo.towerSlotScreenPosition);
+                Vector3 targetPos = Utilites.ScreenToCanvasPoint(_uiManager.Canvas, buildTowerPopupInfo.towerSlotScreenPosition);
+                
+                float canvasRectWidth = _uiManager.Canvas.GetComponent<RectTransform>().rect.width;
+                float canvasRectHeight = _uiManager.Canvas.GetComponent<RectTransform>().rect.height;
+
+                if (targetPos.x + (_container.rect.width / 2f) > canvasRectWidth - _whiteSpaceToScreenBorders)
+                    targetPos.x = canvasRectWidth - (_container.rect.width / 2f) - _whiteSpaceToScreenBorders;
+                else if (targetPos.x - (_container.rect.width / 2f) < 0f + _whiteSpaceToScreenBorders)
+                    targetPos.x = (_container.rect.width / 2f) + _whiteSpaceToScreenBorders;
+
+                if (targetPos.y + (_container.rect.height / 2f) > canvasRectHeight - _whiteSpaceToScreenBorders)
+                    targetPos.y = canvasRectHeight - (_container.rect.height / 2f) - _whiteSpaceToScreenBorders;
+                else if (targetPos.y - (_container.rect.height / 2f) < 0f + _whiteSpaceToScreenBorders)
+                    targetPos.y = (_container.rect.height / 2f) + _whiteSpaceToScreenBorders;
+
+                _container.anchoredPosition = targetPos;
                 _selectedTowerSlot = buildTowerPopupInfo.selectedTowerSlot;
             }
 
             Show();
         }
-
+        
         public void SetMainPriority()
         {
 
